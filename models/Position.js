@@ -9,6 +9,10 @@ const positionSchema = new Schema({
     user: {
         ref: 'users',
         type: Schema.Types.ObjectId
+    },
+    family: {
+        ref: 'families',
+        type: Schema.Types.ObjectId
     }
 })
 
