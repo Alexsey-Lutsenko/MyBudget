@@ -1,0 +1,69 @@
+<div class="row-flex pt-5">
+  <div class="d-flex justify-content-center">Создать аккаунт</div>
+</div>
+
+<form
+  class="container-fluid"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <div>
+    <label>Имя:</label>
+    <input
+      type="email"
+      class="form-control"
+      formControlName="name"
+      [ngClass]="{'border-danger': form.get('name').invalid && form.get('name').touched}"
+    >
+    <span
+      class="text-danger small"
+      *ngIf="form.get('name').invalid && form.get('name').touched"
+    >
+        <span *ngIf="form.get('name').errors['required']">Поле Имя не должно быть пустым</span>
+      </span>
+  </div>
+  <div>
+    <label>Email:</label>
+    <input
+      type="email"
+      class="form-control"
+      formControlName="email"
+      [ngClass]="{'border-danger': form.get('email').invalid && form.get('email').touched}"
+    >
+    <span
+      class="text-danger small"
+      *ngIf="form.get('email').invalid && form.get('email').touched"
+    >
+        <span *ngIf="form.get('email').errors['required']">Email не должен быть пустым</span>
+        <span *ngIf="form.get('email').errors['email']">Введите корректный email адрес</span>
+      </span>
+  </div>
+  <div>
+    <label>Пароль:</label>
+    <input
+      type="password"
+      class="form-control"
+      formControlName="password"
+      [ngClass]="{'border-danger': form.get('password').invalid && form.get('password').touched}"
+    >
+    <span
+      class="text-danger small"
+      *ngIf="form.get('password').invalid && form.get('password').touched"
+    >
+        <span *ngIf="form.get('password').errors['required']">Пароль не должен быть пустым</span>
+        <span *ngIf="form.get('password').errors['minlength'] && form.get('password').errors['minlength']['requiredLength']">
+          Пароль должен быть не менее {{form.get('password').errors['minlength']['requiredLength']}} символов
+        </span>
+      </span>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg mt-2"
+      [disabled]="form.invalid || form.disabled"
+    >
+      Создать
+    </button>
+  </div>
+</form>
+
