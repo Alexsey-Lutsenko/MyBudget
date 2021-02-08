@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../shared/services/auth.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {BootstrapService} from "../shared/services/bootstrap.service";
+declare var $: any
 
 @Component({
   selector: 'app-login-page',
@@ -13,6 +15,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup
   aSub: Subscription
+  message: string
 
   constructor(private auth: AuthService,
               private router: Router,
@@ -48,7 +51,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.aSub = this.auth.login(this.form.value).subscribe(
       () => this.router.navigate(['/costs']),
       error => {
-        console.warn(error)
+        this.message = error.error.message
+        BootstrapService.toast()
         this.form.enable()
       }
     )

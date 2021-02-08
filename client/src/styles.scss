@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+//@import "~materialize-css/dist/css/materialize.min.css";
+.toast {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+}

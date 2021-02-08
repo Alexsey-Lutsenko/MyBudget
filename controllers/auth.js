@@ -38,7 +38,7 @@ module.exports.register = async function(req, res) {
     if (candidate) {
         // User already created
         res.status(409).json({
-            massage: 'Email уже занят, попробуйте другой.'
+            message: 'Email уже занят, попробуйте другой.'
         })
     } else {
         // new User create
