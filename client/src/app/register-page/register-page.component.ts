@@ -17,6 +17,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
   message: string
 
   constructor(private auth: AuthService,
+              private bootstrap: BootstrapService,
               private router: Router) {
   }
 
@@ -48,7 +49,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
       },
       error => {
         this.message = error.error.message
-        BootstrapService.toast()
+        this.bootstrap.toast()
         this.form.enable()
       }
     )

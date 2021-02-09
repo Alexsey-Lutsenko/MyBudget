@@ -8,9 +8,13 @@ const familySchema = new Schema({
     },
     users: [
         {
-            user: {
+            id: {
                 ref: 'users',
                 type: Schema.Types.ObjectId
+            },
+            name: {
+              type: String,
+              required: true
             },
             admin: {
               type: Boolean,

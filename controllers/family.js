@@ -4,7 +4,7 @@ const errorHandler = require('../utils/errorHandler')
 
 module.exports.get = async function(req, res) {
     try {
-        const families = await Family.find({'users.user': req.user.id})
+        const families = await Family.find({'users.id': req.user.id})
         res.status(200).json(families)
     } catch (e) {
         errorHandler(res, e)
@@ -12,12 +12,15 @@ module.exports.get = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
-    const findFamily = await Family.find({'users.user' : req.user.id}).find({name: req.body.name})
+    const findFamily = await Family.find({'users.id' : req.user.id}).find({name: req.body.name})
+    const nameUser = await User.findOne({_id : req.user.id})
+
     if (findFamily.length === 0) {
         const family = await new Family({
                 name: req.body.name,
                 users: [{
-                    user: req.user.id,
+                    id: req.user.id,
+                    name: nameUser.name,
                     admin: true
                     }
                 ]
@@ -38,12 +41,15 @@ module.exports.create = async function(req, res) {
 
 module.exports.addUser = async function (req, res) {
     const candidateEmail = await User.findOne({email: req.body.email})
+
     if (candidateEmail) {
-        const candidate = await Family.find({'users.user': candidateEmail._id})
+        const candidate = await Family.find({'users.id': candidateEmail._id})
         const newUser = {
             users: [
                 {
-                    user: candidateEmail._id
+                    id: candidateEmail._id,
+                    name: candidateEmail.name,
+                    admin: false
                 }
             ]
         }

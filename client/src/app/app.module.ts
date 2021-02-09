@@ -10,6 +10,12 @@ import {AuthLayoutComponent} from './shared/layouts/auth-layout/auth-layout.comp
 import {SiteLayoutComponent} from './shared/layouts/site-layout/site-layout.component';
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
+import {LoaderComponent} from './shared/component/loader/loader.component';
+import {OutlayPageComponent} from './outlay-page/outlay-page.component';
+import { IncomePageComponent } from './income-page/income-page.component';
+import { SettingLayoutComponent } from './shared/layouts/setting-layout/setting-layout.component';
+import { PositionPageComponent } from './position-page/position-page.component';
+import { FamilyPageComponent } from './family-page/family-page.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +23,13 @@ import {TokenInterceptor} from "./shared/classes/token.interceptor";
     LoginPageComponent,
     AuthLayoutComponent,
     SiteLayoutComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    LoaderComponent,
+    OutlayPageComponent,
+    IncomePageComponent,
+    SettingLayoutComponent,
+    PositionPageComponent,
+    FamilyPageComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private bootstrap: BootstrapService) {
   }
 
   ngOnInit(): void {
@@ -49,10 +50,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.form.disable()
 
     this.aSub = this.auth.login(this.form.value).subscribe(
-      () => this.router.navigate(['/costs']),
+      () => this.router.navigate(['/outlay']),
       error => {
         this.message = error.error.message
-        BootstrapService.toast()
+        this.bootstrap.toast()
         this.form.enable()
       }
     )
