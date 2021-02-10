@@ -11,6 +11,30 @@ module.exports.get = async function(req, res) {
     }
 }
 
+module.exports.delete = async function(req, res) {
+    try {
+        await Family.remove({_id: req.params.id})
+        res.status(200).json({
+            message: 'Данные были удалены'
+        })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.deleteUser = async function(req, res) {
+    const candidate = await Family.findOne({_id: req.body.id}).find({'users._id': req.body.userId})
+        try {
+            const family = await Family.findOneAndUpdate(
+                {_id: req.params.id},
+                {$pull: {users: {'_id': req.body.userId}}}
+            )
+            res.status(200).json(family)
+        } catch (e) {
+            errorHandler(res, e)
+        }
+}
+
 module.exports.create = async function(req, res) {
     const findFamily = await Family.find({'users.id' : req.user.id}).find({name: req.body.name})
     const nameUser = await User.findOne({_id : req.user.id})
@@ -43,7 +67,7 @@ module.exports.addUser = async function (req, res) {
     const candidateEmail = await User.findOne({email: req.body.email})
 
     if (candidateEmail) {
-        const candidate = await Family.find({'users.id': candidateEmail._id})
+        const candidate = await Family.findOne({_id: req.body.id}).find({'users.id': candidateEmail._id})
         const newUser = {
             users: [
                 {
@@ -54,10 +78,9 @@ module.exports.addUser = async function (req, res) {
             ]
         }
         if (candidate.length === 0) {
-
             try {
                 const family = await Family.findOneAndUpdate(
-                    {_id: req.params.id},
+                    {_id: req.body.id},
                     {$push: newUser},
                     {new: true}
                 )
@@ -65,7 +88,6 @@ module.exports.addUser = async function (req, res) {
             } catch (e) {
                 errorHandler(res, e)
             }
-
         } else {
             res.status(409).json({
                 message: 'Пользователь с таким email уже был добавлен ранее'
@@ -84,7 +106,7 @@ module.exports.reName = async function (req, res) {
     }
     try {
         const family = await Family.findOneAndUpdate(
-            {_id: req.params.id},
+            {_id: req.body.id},
             {$set: updated},
             {new: true}
         )

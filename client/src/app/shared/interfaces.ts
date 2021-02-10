@@ -3,6 +3,10 @@ export interface User {
   password: string
 }
 
+export interface Message {
+  message: string
+}
+
 export interface RegisterUser {
   name: string
   email: string
@@ -13,10 +17,6 @@ export interface Position {
   name: string
   user: string
   family: string
-}
-
-export interface NewFamily {
-  name: string
 }
 
 export interface Family {
