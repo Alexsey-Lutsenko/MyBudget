@@ -3,8 +3,8 @@ const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
     try {
-        if (req.body.family) {
-            const positions = await Position.find({family: req.body.family})
+        if (req.params.family !== 'user') {
+            const positions = await Position.find({family: req.params.family})
             res.status(200).json(positions)
         } else  {
             const positions = await Position.find({user: req.user.id})
@@ -27,18 +27,26 @@ module.exports.delete = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
-    const position = new Position({
-        name: req.body.name,
-        user: req.user.id,
-        family: req.body.family
-    })
-    try {
-        await position.save()
-        res.status(201).json(position)
-    } catch (e) {
-        errorHandler(res, e)
+    const name = await Position.findOne({name: req.body.name})
+    if (name) {
+        res.status(409).json({
+            message: 'Такое поле уже было добавлено ранее'
+        })
+    } else {
+        const position = new Position({
+            name: req.body.name,
+            user: req.user.id,
+            family: req.body.family
+        })
+        try {
+            await position.save()
+            res.status(201).json(position)
+        } catch (e) {
+            errorHandler(res, e)
+        }
     }
 }
+
 
 module.exports.update = async function(req, res) {
     const updated = {

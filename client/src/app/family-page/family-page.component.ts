@@ -29,7 +29,6 @@ export class FamilyPageComponent implements OnInit {
     this.family.fetch().subscribe(
       (families) => {
         this.families = families
-        console.log(this.families)
       }
     )
   }

@@ -33,4 +33,14 @@ export class FamilyService {
   rename(id: string, name: string): Observable<Family> {
     return this.http.patch<Family>(`/api/family/rename/${id}`, {id, name})
   }
+
+  activeIn(id: string) {
+    localStorage.setItem('family', id)
+  }
+
+  localGet = localStorage.getItem('family').toString()
+
+  activeOut() {
+    this.activeIn('user')
+  }
 }

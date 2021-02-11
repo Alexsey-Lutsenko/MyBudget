@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="container-fluid">
     <router-outlet></router-outlet>
@@ -9,6 +8,26 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/outlay">MyBudget</a>
+      <div class="dropup">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                (click)="getAllFamily()"
+        >
+          {{activeFamily? activeFamily : 'без списка'}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div *ngFor="let f of familiesList">
+            <div *ngIf="!loading; else loader">
+              <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #loader>
+          <app-loader></app-loader>
+        </ng-template>
+
+      </div>
+      <button class="btn btn-danger" (click)="removeActiveFamily()">x</button>
       <ul class="navbar-nav mx-auto">
         <li class="nav-item"  routerLinkActive="active" *ngFor="let link of links">
           <a class="nav-item nav-link"  [routerLink]="link.url">{{link.name}}</a>
