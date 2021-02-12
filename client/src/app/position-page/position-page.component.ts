@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PositionService} from "../shared/services/position.service";
 import {Position} from "../shared/interfaces";
 import {FamilyService} from "../shared/services/family.service";
@@ -25,9 +25,8 @@ export class PositionPageComponent implements OnInit {
   }
 
   getAllPosition() {
-    this.position.fetch(this.family.localGet).subscribe((position) => {
+    this.position.fetch(this.family.localGet()).subscribe((position) => {
       this.positionsList = position
-      console.log(position)
     })
   }
 
@@ -41,7 +40,7 @@ export class PositionPageComponent implements OnInit {
     console.log(name, this.family.localGet)
 
     if (name) {
-      this.position.create(name, this.family.localGet).subscribe(
+      this.position.create(name, this.family.localGet()).subscribe(
         () => {
           this.getAllPosition()
           this.message = `Поле ${name} успешно добавлено`

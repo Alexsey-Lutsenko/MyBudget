@@ -3,7 +3,7 @@ const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
     try {
-        if (req.params.family !== 'user') {
+        if (req.params.family !== '000000000000000000000000') {
             const positions = await Position.find({family: req.params.family})
             res.status(200).json(positions)
         } else  {

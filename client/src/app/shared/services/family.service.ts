@@ -38,9 +38,11 @@ export class FamilyService {
     localStorage.setItem('family', id)
   }
 
-  localGet = localStorage.getItem('family').toString()
+  localGet() {
+    return localStorage.getItem('family').toString()
+  }
 
   activeOut() {
-    this.activeIn('user')
+    this.activeIn('000000000000000000000000')
   }
 }
