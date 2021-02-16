@@ -10,9 +10,17 @@ const incomeSchema = new Schema({
         type: Number,
         required: true
     },
+    userName: {
+        type: String,
+        required: true
+    },
     user: {
         ref: 'users',
         type: Schema.Types.ObjectId
+    },
+    familyName: {
+        type: String,
+        required: true
     },
     family: {
         ref: 'families',

@@ -34,15 +34,23 @@ export class FamilyService {
     return this.http.patch<Family>(`/api/family/rename/${id}`, {id, name})
   }
 
-  activeIn(id: string) {
-    localStorage.setItem('family', id)
+  activeIn(family: string) {
+    localStorage.setItem('family', family)
   }
 
   localGet() {
-    return localStorage.getItem('family').toString()
+    const raw = localStorage.getItem('family')
+    const family = JSON.parse(raw)
+    return family.id
+  }
+
+  localGetName() {
+    const raw = localStorage.getItem('family')
+    const family = JSON.parse(raw)
+    return family.name
   }
 
   activeOut() {
-    this.activeIn('000000000000000000000000')
+    this.activeIn(JSON.stringify({name: 'без списка', id: 	'000000000000000000000000'}))
   }
 }

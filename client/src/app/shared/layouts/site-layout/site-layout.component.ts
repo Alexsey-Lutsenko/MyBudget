@@ -36,32 +36,23 @@ export class SiteLayoutComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllFamily()
-    console.log(this.familiesList)
-    this.activeFamily = this.family.localGet()
-    // console.log(this.familiesList)
-    // this.activeFamily = this.familiesList.find((f) => f._id === this.family.localGet).name
+    this.activeFamily = this.family.localGetName()
   }
 
   getAllFamily() {
     this.family.fetch().subscribe((families) => {
       this.familiesList = families
-      console.log(this.familiesList)
-      const id = new ObjectID
-      let a = this.familiesList.find(f => f._id === 'Луценко')
-      console.log(a)
     })
   }
 
   saveFamily(id: string, name: string) {
-    this.e = true
-    this.family.activeIn(id)
-    this.activeFamily = name
+    const family = JSON.stringify({name: name, id: id})
+    this.family.activeIn(family)
     this.pageReload()
   }
 
   removeActiveFamily() {
     this.family.activeOut()
-    this.activeFamily = ''
     this.pageReload()
   }
 

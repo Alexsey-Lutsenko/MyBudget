@@ -60,3 +60,14 @@ module.exports.register = async function(req, res) {
     }
 }
 
+module.exports.getUser = async function(req, res) {
+    try {
+        const user = await User.findOne({'_id': req.user._id})
+        res.status(200).json({
+            id: user._id,
+            name: user.name
+        })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}

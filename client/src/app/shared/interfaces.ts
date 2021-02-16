@@ -15,7 +15,9 @@ export interface RegisterUser {
 
 export interface Position {
   name: string
+  userName: string
   user: string
+  familyName: string
   family: string
 }
 
@@ -28,4 +30,13 @@ export interface Users {
   id: string
   name: string
   admin: boolean
+}
+
+export interface Income {
+  date: Date
+  sum: number
+  userName: string
+  user: string
+  familyName: string
+  family: string
 }

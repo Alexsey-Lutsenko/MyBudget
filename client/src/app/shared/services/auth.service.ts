@@ -46,4 +46,24 @@ export class AuthService {
     this.setToken(null)
     localStorage.clear()
   }
+
+  getUser(): Observable<{id: string, name: string}> {
+    return this.http.get<{id: string, name: string}>('/api/auth/user')
+  }
+
+  activeIn(user: string) {
+    localStorage.setItem('user', user)
+  }
+
+  localGet() {
+    const raw = localStorage.getItem('user')
+    const user = JSON.parse(raw)
+    return user.id
+  }
+
+  localGetName() {
+    const raw = localStorage.getItem('user')
+    const user = JSON.parse(raw)
+    return user.name
+  }
 }

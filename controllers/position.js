@@ -1,4 +1,6 @@
 const Position = require('../models/Position')
+const User = require('../models/User')
+const Family = require('../models/Family')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
@@ -28,6 +30,8 @@ module.exports.delete = async function(req, res) {
 
 module.exports.create = async function(req, res) {
     const name = await Position.findOne({name: req.body.name})
+    const user = await User.findOne({'_id': req.user.id})
+    const family = await Family.findOne({'_id': req.body.family})
     if (name) {
         res.status(409).json({
             message: 'Такое поле уже было добавлено ранее'
@@ -35,7 +39,9 @@ module.exports.create = async function(req, res) {
     } else {
         const position = new Position({
             name: req.body.name,
+            userName: user.name,
             user: req.user.id,
+            familyName: family.name,
             family: req.body.family
         })
         try {
@@ -49,17 +55,25 @@ module.exports.create = async function(req, res) {
 
 
 module.exports.update = async function(req, res) {
-    const updated = {
-        name: req.body.name
-    }
-    try {
-        const position = await Position.findOneAndUpdate(
-            {_id: req.params.id},
-            {$set: updated},
-            {new: true}
-        )
-        res.status(200).json(position)
-    } catch (e) {
-        errorHandler(res, e)
+    const conflictName = await Position.findOne({family: req.body.family}).findOne({name: req.body.name})
+
+    if (conflictName) {
+        res.status(409).json({
+            message: 'Такая позиция уже создана'
+        })
+    } else {
+        const updated = {
+            name: req.body.name
+        }
+        try {
+            const position = await Position.findOneAndUpdate(
+                {_id: req.params.id},
+                {$set: updated},
+                {new: true}
+            )
+            res.status(200).json(position)
+        } catch (e) {
+            errorHandler(res, e)
+        }
     }
 }

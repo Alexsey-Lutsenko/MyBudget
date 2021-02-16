@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {PositionService} from "../shared/services/position.service";
 import {Position} from "../shared/interfaces";
 import {FamilyService} from "../shared/services/family.service";
@@ -16,6 +16,8 @@ export class PositionPageComponent implements OnInit {
   name: string
   message: string
 
+  @ViewChild('input') inputRename: ElementRef
+
   constructor(private position: PositionService,
               private family: FamilyService,
               private bootstrap: BootstrapService) { }
@@ -25,25 +27,20 @@ export class PositionPageComponent implements OnInit {
   }
 
   getAllPosition() {
-    this.position.fetch(this.family.localGet()).subscribe((position) => {
+    this.position.fetch().subscribe((position) => {
       this.positionsList = position
     })
   }
 
-  created() {
-    window.addEventListener('storage', () => {
-      console.log('yes')
-    })
-  }
 
-  createPosition(name: string) {
-    console.log(name, this.family.localGet)
-
+  createPosition() {
+    const name = this.name
     if (name) {
       this.position.create(name, this.family.localGet()).subscribe(
         () => {
+          this.name = null
           this.getAllPosition()
-          this.message = `Поле ${name} успешно добавлено`
+          this.message = `Позиция "${name}" успешно добавлена`
           this.bootstrap.toast()
         },
         error => {
@@ -51,6 +48,42 @@ export class PositionPageComponent implements OnInit {
           this.bootstrap.toast()
         }
       )
+    } else {
+      this.message = 'Введите название позиции'
+      this.bootstrap.toast()
+    }
+  }
+
+  removePosition(id: string) {
+    this.position.delete(id).subscribe(
+      () => {
+        this.getAllPosition()
+        this.message = 'Позиция была удалена'
+        this.bootstrap.toast()
+      },
+      error => {
+        this.message = error.error.message
+        this.bootstrap.toast()
+      }
+    )
+  }
+
+  renamePosition(id: string) {
+    const name = this.inputRename.nativeElement.value
+    if (name !== '') {
+      this.position.update(id, name).subscribe(
+        () => {
+          this.getAllPosition()
+          this.message = 'Позиция успешно переименована'
+          this.bootstrap.toast()
+        }, error => {
+          this.message = error.error.message
+          this.bootstrap.toast()
+        }
+      )
+    } else {
+      this.message = 'Введите название позиции'
+      this.bootstrap.toast()
     }
   }
 
