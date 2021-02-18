@@ -12,10 +12,14 @@ import {RegisterPageComponent} from './register-page/register-page.component';
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
 import {LoaderComponent} from './shared/component/loader/loader.component';
 import {OutlayPageComponent} from './outlay-page/outlay-page.component';
-import { IncomePageComponent } from './income-page/income-page.component';
-import { SettingLayoutComponent } from './shared/layouts/setting-layout/setting-layout.component';
-import { PositionPageComponent } from './position-page/position-page.component';
-import { FamilyPageComponent } from './family-page/family-page.component';
+import {IncomePageComponent} from './income-page/income-page.component';
+import {SettingLayoutComponent} from './shared/layouts/setting-layout/setting-layout.component';
+import {PositionPageComponent} from './position-page/position-page.component';
+import {FamilyPageComponent} from './family-page/family-page.component';
+import {AnalyticalPageComponent} from './analytical-page/analytical-page.component';
+
+import {DragulaModule} from "ng2-dragula";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,14 +33,17 @@ import { FamilyPageComponent } from './family-page/family-page.component';
     IncomePageComponent,
     SettingLayoutComponent,
     PositionPageComponent,
-    FamilyPageComponent
+    FamilyPageComponent,
+    AnalyticalPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragulaModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [
     {

@@ -17,6 +17,7 @@ export class SiteLayoutComponent implements OnInit{
   links = [
     {url: '/outlay', name: 'Расходы'},
     {url: '/income', name: 'Доходы'},
+    {url: '/analytical', name: 'Аналитика'},
     {url: '/setting', name: 'Настройки'}
   ]
 
@@ -35,8 +36,31 @@ export class SiteLayoutComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.getAllFamily()
-    this.activeFamily = this.family.localGetName()
+    try {
+      this.auth.localGet()
+    } catch {
+      this.getUser()
+    }
+
+    try {
+      this.family.localGet()
+    } catch {
+      this.getAllFamily()
+      this.family.activeIn(JSON.stringify({name: 'без списка', id: '000000000000000000000000'}))
+    }
+  }
+
+  getUser() {
+    this.auth.getUser().subscribe(
+      (user) => {
+        this.localStorageActiveUser(user.id.toString(), user.name.toString())
+      }
+    )
+  }
+
+  localStorageActiveUser(id: string, name: string) {
+    const user = JSON.stringify({name: name, id: id})
+    this.auth.activeIn(user)
   }
 
   getAllFamily() {

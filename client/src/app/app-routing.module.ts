@@ -10,6 +10,7 @@ import {IncomePageComponent} from "./income-page/income-page.component";
 import {SettingLayoutComponent} from "./shared/layouts/setting-layout/setting-layout.component";
 import {PositionPageComponent} from "./position-page/position-page.component";
 import {FamilyPageComponent} from "./family-page/family-page.component";
+import {AnalyticalPageComponent} from "./analytical-page/analytical-page.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'outlay', component: OutlayPageComponent},
       {path: 'income', component: IncomePageComponent},
+      {path: 'analytical', component: AnalyticalPageComponent},
       {path: 'setting', component: SettingLayoutComponent, children: [
           {path: '', redirectTo: 'position', pathMatch: 'full'},
           {path:'position', component: PositionPageComponent},

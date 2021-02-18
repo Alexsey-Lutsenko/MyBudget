@@ -1,14 +1,14 @@
-const Order = require('../models/Order')
+const Outlay = require('../models/Outlay')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
     try {
-        if (req.body.family) {
-            const orders = await Order.find({family: req.body.family})
-            res.status(200).json(orders)
+        if (req.params.family) {
+            const outlay = await Outlay.find({family: req.params.family})
+            res.status(200).json(outlay)
         } else  {
-            const orders = await Order.find({user: req.user.id})
-            res.status(200).json(orders)
+            const outlay = await Outlay.find({user: req.user.id})
+            res.status(200).json(outlay)
         }
     }   catch (e) {
         errorHandler(res, e)
@@ -16,15 +16,15 @@ module.exports.getAll = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
-    const order = new Order({
+    const outlay = new Outlay({
         position: req.body.position,
         sum: req.body.sum,
         user: req.user.id,
         family: req.body.family
     })
     try {
-        await order.save()
-        res.status(201).json(order)
+        await outlay.save()
+        res.status(201).json(outlay)
     } catch (e) {
         errorHandler(res, e)
     }
@@ -32,7 +32,7 @@ module.exports.create = async function(req, res) {
 
 module.exports.delete = async function(req, res) {
     try {
-        await Order.remove({_id: req.params.id})
+        await Outlay.remove({_id: req.params.id})
         res.status(200).json({
             message: 'Данные о расходах были удалены'
         })

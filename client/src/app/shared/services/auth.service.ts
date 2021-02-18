@@ -58,7 +58,11 @@ export class AuthService {
   localGet() {
     const raw = localStorage.getItem('user')
     const user = JSON.parse(raw)
-    return user.id
+    if (user.id) {
+      return user.id
+    } else {
+      return
+    }
   }
 
   localGetName() {

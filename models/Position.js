@@ -21,6 +21,10 @@ const positionSchema = new Schema({
     family: {
         ref: 'families',
         type: Schema.Types.ObjectId
+    },
+    order: {
+        type: Number,
+        required: true
     }
 })
 

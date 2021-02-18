@@ -42,7 +42,8 @@ module.exports.create = async function(req, res) {
             userName: user.name,
             user: req.user.id,
             familyName: family.name,
-            family: req.body.family
+            family: req.body.family,
+            order: req.body.order
         })
         try {
             await position.save()

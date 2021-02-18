@@ -19,6 +19,7 @@ export interface Position {
   user: string
   familyName: string
   family: string
+  order: number
 }
 
 export interface Family {
@@ -38,5 +39,13 @@ export interface Income {
   userName: string
   user: string
   familyName: string
+  family: string
+}
+
+export interface Outlay {
+  date: Date
+  position: string
+  sum: number
+  user: string
   family: string
 }

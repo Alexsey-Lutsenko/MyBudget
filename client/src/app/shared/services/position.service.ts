@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Family, Message, Position} from "../interfaces";
+import {Message, Position} from "../interfaces";
 import {FamilyService} from "./family.service";
 
 @Injectable({
@@ -13,8 +13,8 @@ export class PositionService {
               private family: FamilyService) {
   }
 
-  create(name: string, family: string): Observable<Position[]> {
-    return this.http.post<Position[]>('/api/position', {name, family})
+  create(name: string, family: string, order: number): Observable<Position[]> {
+    return this.http.post<Position[]>('/api/position', {name, family, order})
   }
 
 
