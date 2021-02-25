@@ -6,23 +6,30 @@
 </div>
 
 <div class="mt-3" *ngIf="positionsList; else loader">
-  <div dragula="TASKS" [dragulaModel]="positionsList" (dragulaModelChange)="positionsList = $event">
-    <div class="list-group mt-1" *ngFor="let position of positionsList">
-      <div class="row border mt-1">
-        <div class="mr-2 handle bg-dark content">
-          ==
-<!--          <fa-icon [icon]="faArrowsAlt" class="fs-2"></fa-icon>-->
-        </div>
-        {{position.name}}
-        <input class="form ml-5" placeholder="Имя" name="positionName" #input>
-        <div class="ml-auto">
-          <button type="submit" class="btn btn-primary btn-small" (click)="renamePosition(position._id)"><></button>
-          <button type="submit" class="btn btn-primary btn-small ml-5" (click)="removePosition(position._id)">-</button>
+  <div *ngIf="positionsList.length > 0; else notPosition">
+    <div dragula="POSITIONS" [(dragulaModel)]="positionsList">
+      <div class="list-group mt-1" *ngFor="let position of positionsList">
+        <div class="row border mt-1">
+          <div class="mr-2 handle bg-dark content">
+            ==
+            <!--          <fa-icon [icon]="faArrowsAlt" class="fs-2"></fa-icon>-->
+          </div>
+          {{position.name}}  order: {{position.order}}
+          <input class="form ml-5" placeholder="Имя" name="positionName" #input>
+          <div class="ml-auto">
+            <button type="submit" class="btn btn-primary btn-small" (click)="renamePosition(position._id)"><></button>
+            <button type="submit" class="btn btn-primary btn-small ml-5" (click)="removePosition(position._id)">-</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #notPosition>
+  <span>Здесь пока нет позиций</span>
+</ng-template>
+
 
 <ng-template #loader>
   <app-loader></app-loader>

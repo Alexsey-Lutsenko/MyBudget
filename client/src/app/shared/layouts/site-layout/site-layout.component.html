@@ -10,12 +10,13 @@
       <a class="navbar-brand" routerLink="/outlay">MyBudget</a>
       <div class="dropup">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                (click)="getAllFamily()"
         >
           {{activeFamily? activeFamily : 'без списка'}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div *ngFor="let f of familiesList">
-            <div *ngIf="!loading; else loader">
+          <div *ngIf="familiesList; else loader">
+            <div *ngFor="let f of familiesList">
               <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
             </div>
           </div>

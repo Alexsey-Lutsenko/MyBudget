@@ -29,6 +29,10 @@ export class OutlayPageComponent implements OnInit {
     this.position.fetch().subscribe(
       (position) => {
         this.positionList = position
+
+        this.positionList.sort((a,b) => {
+          return a.order - b.order;
+        })
       }, error => {
         this.message = error.error.message
         this.bootstrap.toast()

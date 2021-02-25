@@ -25,13 +25,26 @@ export class PositionPageComponent implements OnInit {
   constructor(private position: PositionService,
               private family: FamilyService,
               private bootstrap: BootstrapService,
-              private dragula: DragulaService) {
-    dragula.createGroup('TASKS', {
-      moves: (el, container, handle) => {
-        return handle.classList.contains('handle')
-      }
+              private dragulaService: DragulaService) {
+    dragulaService.destroy("POSITIONS")
+
+    this.dragulaService.createGroup("POSITIONS", {
+    });
+
+    this.dragulaService.dropModel("POSITIONS").subscribe(args => {
+      // console.log(args);
+      // console.log(this.positionsList)
+
+      let idxNew = args.sourceModel.findIndex(p => p.name == args.item.name).toString()
+      let posNew = ((args.sourceModel[+idxNew - 1]?.order ? args.sourceModel[+idxNew - 1].order : 0)
+        + (args.sourceModel[+idxNew + 1]?.order ? args.sourceModel[+idxNew + 1].order : args.sourceModel.length + 1))/2
+      console.log('old = ' + idxNew, 'newPosition = (array[i-1] ' + (args.sourceModel[+idxNew - 1]?.order ? args.sourceModel[+idxNew - 1].order : 0) +
+        '+ array[i+1]) ' + (args.sourceModel[+idxNew + 1]?.order ? args.sourceModel[+idxNew + 1].order : args.sourceModel.length + 1) + '/2 = ' + posNew)
+      this.updateOrder(args.item._id, posNew)
+      this.getAllPosition()
     })
   }
+
 
   ngOnInit(): void {
     this.getAllPosition()
@@ -40,14 +53,20 @@ export class PositionPageComponent implements OnInit {
   getAllPosition() {
     this.position.fetch().subscribe((position) => {
       this.positionsList = position
+
+      this.positionsList.sort((a,b) => {
+        return a.order - b.order;
+      })
     })
   }
 
 
   createPosition() {
     const name = this.name
+    const order = this.positionsList.length + 1
+
     if (name) {
-      this.position.create(name, this.family.localGet(), 1).subscribe(
+      this.position.create(name, this.family.localGet(), order).subscribe(
         () => {
           this.name = null
           this.getAllPosition()
@@ -96,6 +115,18 @@ export class PositionPageComponent implements OnInit {
       this.message = 'Введите название позиции'
       this.bootstrap.toast()
     }
+  }
+
+  updateOrder(id: string, newOrder: number) {
+    this.position.updateOrder(id, newOrder).subscribe(
+      () => {
+        this.message = 'Порядок позиций изменен'
+        this.bootstrap.toast()
+      }, error => {
+        this.message = error.error.message
+        this.bootstrap.toast()
+      }
+    )
   }
 
 }

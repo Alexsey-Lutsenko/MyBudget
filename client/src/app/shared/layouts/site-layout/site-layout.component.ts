@@ -23,7 +23,6 @@ export class SiteLayoutComponent implements OnInit{
 
   familiesList: Family[]
   activeFamily: string
-  loading: boolean
   e: boolean
   positions: Position[]
 
@@ -48,6 +47,8 @@ export class SiteLayoutComponent implements OnInit{
       this.getAllFamily()
       this.family.activeIn(JSON.stringify({name: 'без списка', id: '000000000000000000000000'}))
     }
+
+    this.activeFamily = this.family.localGetName()
   }
 
   getUser() {
@@ -66,6 +67,7 @@ export class SiteLayoutComponent implements OnInit{
   getAllFamily() {
     this.family.fetch().subscribe((families) => {
       this.familiesList = families
+      console.log(this.familiesList)
     })
   }
 

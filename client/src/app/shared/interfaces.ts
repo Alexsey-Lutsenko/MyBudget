@@ -14,6 +14,7 @@ export interface RegisterUser {
 }
 
 export interface Position {
+  id: string
   name: string
   userName: string
   user: string

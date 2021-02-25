@@ -27,7 +27,11 @@ export class PositionService {
   }
 
   update(id: string, name: string): Observable<Position> {
-    return this.http.patch<Position>(`/api/position/${id}`, {name, family: this.family.localGetName()})
+    return this.http.patch<Position>(`/api/position/${id}`, {name, family: this.family.localGet()})
+  }
+
+  updateOrder(id: string, order: number): Observable<Position> {
+    return this.http.patch<Position>(`/api/position/order/${id}`, {order, family: this.family.localGet()})
   }
 
 }

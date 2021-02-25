@@ -78,3 +78,19 @@ module.exports.update = async function(req, res) {
         }
     }
 }
+
+module.exports.updateOrder = async function(req, res) {
+    const updated = {
+        order: req.body.order
+    }
+    try {
+        const position = await Position.findOneAndUpdate(
+            {_id: req.params.id},
+            {$set: updated},
+            {new: true}
+        )
+        res.status(200).json(position)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
