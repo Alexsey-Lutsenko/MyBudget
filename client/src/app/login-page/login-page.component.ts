@@ -9,7 +9,7 @@ declare var $: any
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  styleUrls: ['./login-page.component.scss', './../shared/layouts/auth-layout/auth-layout.component.scss']
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
 

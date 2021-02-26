@@ -8,7 +8,7 @@ import {BootstrapService} from "../shared/services/bootstrap.service";
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss']
+  styleUrls: ['./register-page.component.scss', './../shared/layouts/auth-layout/auth-layout.component.scss']
 })
 export class RegisterPageComponent implements OnInit, OnDestroy {
 
