@@ -14,7 +14,7 @@ export interface RegisterUser {
 }
 
 export interface Position {
-  id: string
+  _id: string
   name: string
   userName: string
   user: string
@@ -24,17 +24,20 @@ export interface Position {
 }
 
 export interface Family {
+  _id: string
   name: string
   users: Users[]
+  def: number
 }
 
 export interface Users {
-  id: string
+  _id: string
   name: string
   admin: boolean
 }
 
 export interface Income {
+  _id: string
   date: Date
   sum: number
   userName: string
@@ -44,6 +47,7 @@ export interface Income {
 }
 
 export interface Outlay {
+  _id: string
   date: Date
   position: string
   sum: number

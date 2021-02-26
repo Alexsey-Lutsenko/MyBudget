@@ -21,7 +21,11 @@ const familySchema = new Schema({
               default: false
             }
         }
-    ]
+    ],
+    def: {
+        type: Number,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('families', familySchema)

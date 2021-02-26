@@ -15,30 +15,36 @@
         <th scope="col">Админ</th>
         <th scope="col">Добавить</th>
         <th scope="col">Удалить</th>
+        <th scope="col">Default</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let f of families">
-        <td scope="{{f.users.length}}">
-          {{f.name}}
-          <button type="submit" class="btn btn-primary btn-small" (click)="openModal(modal, f._id,1)"><></button>
-        </td>
-        <td>
-          <div *ngFor="let user of f.users">
-            {{user.name}}
-            <button type="submit" class="btn btn-primary btn-small" (click)="deleteUserFamily(f._id, user._id, user.admin)">del</button>
-          </div>
-        </td>
-        <td>
-          <div *ngFor="let user of f.users">{{user.admin? 'Да' : 'Нет'}}</div>
-        </td>
-        <td>
-          <button type="submit" class="btn btn-primary btn-small" (click)="openModal(modal, f._id,2)">+</button>
-        </td>
-        <td>
-          <button type="submit" class="btn btn-primary btn-small" (click)="deleteAllFamily(f._id)">-</button>
-        </td>
-      </tr>
+        <tr *ngFor="let f of families; let i = index">
+          <td scope="{{f.users.length}}">
+            {{f.name}}
+            <button type="submit" class="btn btn-primary btn-small" (click)="openModal(modal, f._id,1)"><></button>
+          </td>
+          <td>
+            <div *ngFor="let user of f.users">
+              {{user.name}}
+              <button type="submit" class="btn btn-primary btn-small" (click)="deleteUserFamily(f._id, user._id, user.admin)">del</button>
+            </div>
+          </td>
+          <td>
+            <div *ngFor="let user of f.users">{{user.admin? 'Да' : 'Нет'}}</div>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-primary btn-small" (click)="openModal(modal, f._id,2)">+</button>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-primary btn-small" (click)="deleteAllFamily(f._id)">-</button>
+          </td>
+          <td>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" [checked]="f.def == maxDefFamily" (click)="defaultFamily(f._id)">
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>

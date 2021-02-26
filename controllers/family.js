@@ -47,7 +47,8 @@ module.exports.create = async function(req, res) {
                     name: nameUser.name,
                     admin: true
                     }
-                ]
+                ],
+                def: req.body.def
             })
 
             try {
@@ -103,6 +104,22 @@ module.exports.addUser = async function (req, res) {
 module.exports.reName = async function (req, res) {
     const updated = {
         name: req.body.name
+    }
+    try {
+        const family = await Family.findOneAndUpdate(
+            {_id: req.body.id},
+            {$set: updated},
+            {new: true}
+        )
+        res.status(200).json(family)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.def = async function (req, res) {
+    const updated = {
+        def: req.body.def
     }
     try {
         const family = await Family.findOneAndUpdate(

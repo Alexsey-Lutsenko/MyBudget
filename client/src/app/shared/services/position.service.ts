@@ -18,8 +18,8 @@ export class PositionService {
   }
 
 
-  fetch(): Observable<Position[]> {
-    return this.http.get<Position[]>(`/api/position/${this.family.localGet()}`)
+  fetch(id: string): Observable<Position[]> {
+    return this.http.get<Position[]>(`/api/position/${id}`)
   }
 
   delete(id: string): Observable<Message> {

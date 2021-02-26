@@ -1,5 +1,13 @@
 <div class="form-group mt-3">
-  <input class="form-control" placeholder="Сумма" [(ngModel)]="sum">
+  <input
+    class="form-control"
+    [placeholder]="activeFamily == '000000000000000000000000' ? 'Чтобы ввести значение выберите семью' : positionQty < 1 ? 'Создайте для начала списки' : 'Сумма'"
+    [(ngModel)]="sum" [disabled]="activeFamily == '000000000000000000000000' || positionQty < 1"
+  >
+</div>
+
+<div *ngIf="positionQty < 1">
+  <a routerLink="/setting/position">Создать списки</a>
 </div>
 
 <div class="mt-3" *ngIf="positionList; else loader">

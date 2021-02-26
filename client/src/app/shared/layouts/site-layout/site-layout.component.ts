@@ -5,7 +5,6 @@ import {FamilyService} from "../../services/family.service";
 import {Family, Position} from "../../interfaces";
 import {PositionService} from "../../services/position.service";
 import {DOCUMENT} from "@angular/common";
-import {ObjectID} from 'mongodb'
 
 @Component({
   selector: 'app-site-layout',
@@ -21,8 +20,9 @@ export class SiteLayoutComponent implements OnInit{
     {url: '/setting', name: 'Настройки'}
   ]
 
-  familiesList: Family[]
-  activeFamily: string
+  activeFamilies: Family
+  activeFamilyName: string
+  families: Family[]
   e: boolean
   positions: Position[]
 
@@ -43,12 +43,19 @@ export class SiteLayoutComponent implements OnInit{
 
     try {
       this.family.localGet()
+      this.activeFamilyName = this.family.localGetName()
     } catch {
-      this.getAllFamily()
-      this.family.activeIn(JSON.stringify({name: 'без списка', id: '000000000000000000000000'}))
-    }
+      this.family.fetch().subscribe((families) => {
+        const defMax = families.sort((a,b) => {
+          return b.def - a.def
+        })[0].def
 
-    this.activeFamily = this.family.localGetName()
+        this.activeFamilies = families.find(f => f.def == defMax)
+        this.families = families
+        this.family.activeIn(JSON.stringify({name: this.activeFamilies.name, id: this.activeFamilies._id}))
+        this.activeFamilyName = this.family.localGetName()
+      })
+    }
   }
 
   getUser() {
@@ -66,10 +73,10 @@ export class SiteLayoutComponent implements OnInit{
 
   getAllFamily() {
     this.family.fetch().subscribe((families) => {
-      this.familiesList = families
-      console.log(this.familiesList)
+      this.families = families
     })
   }
+
 
   saveFamily(id: string, name: string) {
     const family = JSON.stringify({name: name, id: id})

@@ -12,11 +12,11 @@
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 (click)="getAllFamily()"
         >
-          {{activeFamily? activeFamily : 'без списка'}}
+          {{activeFamilyName? activeFamilyName : 'без списка'}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div *ngIf="familiesList; else loader">
-            <div *ngFor="let f of familiesList">
+          <div *ngIf="families; else loader">
+            <div *ngFor="let f of families">
               <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
             </div>
           </div>

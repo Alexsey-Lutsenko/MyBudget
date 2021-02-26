@@ -17,8 +17,8 @@ export class OutlayService {
     return this.http.post<Outlay>('/api/outlay',{position, sum, family: this.family.localGet()})
   }
 
-  fetch(): Observable<Outlay[]> {
-    return this.http.get<Outlay[]>(`/api/outlay/${this.family.localGet()}`)
+  fetch(id: string): Observable<Outlay[]> {
+    return this.http.get<Outlay[]>(`/api/outlay/${id}`)
   }
 
   delete(id: string): Observable<Message> {

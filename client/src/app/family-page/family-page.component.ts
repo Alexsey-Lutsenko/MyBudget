@@ -17,6 +17,7 @@ export class FamilyPageComponent implements OnInit {
   families: Family[]
   currentId: string
   typeModal: number
+  maxDefFamily: number
 
   constructor(private family: FamilyService,
               private bootstrap: BootstrapService) {}
@@ -28,6 +29,9 @@ export class FamilyPageComponent implements OnInit {
   getAllFamily() {
     this.family.fetch().subscribe(
       (families) => {
+        this.maxDefFamily = families.sort((a,b) => {
+          return b.def - a.def;
+        })[0].def
         this.families = families
       }
     )
@@ -35,7 +39,7 @@ export class FamilyPageComponent implements OnInit {
 
   createFamily(name: string) {
     if (name) {
-        this.family.create(name).subscribe(
+        this.family.create(name, 0).subscribe(
         () => {
           this.message = 'Создана новая семья'
           this.bootstrap.toast()
@@ -132,6 +136,22 @@ export class FamilyPageComponent implements OnInit {
       this.message = 'Нельзя удалить администратора'
       this.bootstrap.toast()
     }
+  }
+
+  defaultFamily(id: string) {
+    const defNumber = this.maxDefFamily + 0.05
+
+    this.maxDefFamily = null
+    this.family.def(id, defNumber).subscribe(
+      () => {
+        this.getAllFamily()
+        this.message = 'Семья по умолчанию изменена'
+        this.bootstrap.toast()
+      },error => {
+        this.message = error.error.message
+        this.bootstrap.toast()
+      }
+    )
   }
 
 }

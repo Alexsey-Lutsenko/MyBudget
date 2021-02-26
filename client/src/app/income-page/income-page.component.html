@@ -1,5 +1,5 @@
 <div class="form-group mt-3">
-  <input class="form-control" placeholder="Сумма" [(ngModel)]="sum">
+  <input class="form-control" [placeholder]="activeFamily == '000000000000000000000000' ? 'Чтобы ввести значение выберите семью' : 'Сумма'" [(ngModel)]="sum" [disabled]="activeFamily == '000000000000000000000000'">
 </div>
 <div class="d-flex justify-content-center">
   <button type="submit" class="btn btn-primary" (click)="createIncome()">Создать</button>

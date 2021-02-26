@@ -3,7 +3,7 @@ const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
     try {
-        if (req.params.family) {
+        if (req.params.family !== '000000000000000000000000') {
             const outlay = await Outlay.find({family: req.params.family})
             res.status(200).json(outlay)
         } else  {

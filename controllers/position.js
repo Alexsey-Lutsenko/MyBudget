@@ -29,9 +29,9 @@ module.exports.delete = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
-    const name = await Position.findOne({name: req.body.name})
     const user = await User.findOne({'_id': req.user.id})
     const family = await Family.findOne({'_id': req.body.family})
+    const name = await Position.findOne({family: req.body.family}).findOne({name: req.body.name})
     if (name) {
         res.status(409).json({
             message: 'Такое поле уже было добавлено ранее'

@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IncomeService} from "../shared/services/income.service";
 import {BootstrapService} from "../shared/services/bootstrap.service";
 import {Income} from "../shared/interfaces";
+import {FamilyService} from "../shared/services/family.service";
 
 @Component({
   selector: 'app-income-page',
@@ -13,14 +14,17 @@ export class IncomePageComponent implements OnInit {
   message: string
   sum: number
   incomes: Income[]
+  activeFamily: string
 
   @ViewChild('input') inputRename: ElementRef
 
   constructor(private income: IncomeService,
+              private family: FamilyService,
               private bootstrap: BootstrapService) { }
 
   ngOnInit(): void {
     this.getAllIncomes()
+    this.activeFamily = this.family.localGet()
   }
 
   getAllIncomes() {

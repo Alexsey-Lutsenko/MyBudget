@@ -19,6 +19,7 @@ export class PositionPageComponent implements OnInit {
   positionsList: Position[]
   name: string
   message: string
+  activeFamily: string
 
   @ViewChild('input') inputRename: ElementRef
 
@@ -38,22 +39,21 @@ export class PositionPageComponent implements OnInit {
       let idxNew = args.sourceModel.findIndex(p => p.name == args.item.name).toString()
       let posNew = ((args.sourceModel[+idxNew - 1]?.order ? args.sourceModel[+idxNew - 1].order : 0)
         + (args.sourceModel[+idxNew + 1]?.order ? args.sourceModel[+idxNew + 1].order : args.sourceModel.length + 1))/2
-      console.log('old = ' + idxNew, 'newPosition = (array[i-1] ' + (args.sourceModel[+idxNew - 1]?.order ? args.sourceModel[+idxNew - 1].order : 0) +
-        '+ array[i+1]) ' + (args.sourceModel[+idxNew + 1]?.order ? args.sourceModel[+idxNew + 1].order : args.sourceModel.length + 1) + '/2 = ' + posNew)
+      // console.log('old = ' + idxNew, 'newPosition = (array[i-1] ' + (args.sourceModel[+idxNew - 1]?.order ? args.sourceModel[+idxNew - 1].order : 0) +
+      //   '+ array[i+1]) ' + (args.sourceModel[+idxNew + 1]?.order ? args.sourceModel[+idxNew + 1].order : args.sourceModel.length + 1) + '/2 = ' + posNew)
       this.updateOrder(args.item._id, posNew)
       this.getAllPosition()
     })
   }
 
-
   ngOnInit(): void {
     this.getAllPosition()
+    this.activeFamily = this.family.localGet()
   }
 
   getAllPosition() {
-    this.position.fetch().subscribe((position) => {
+    this.position.fetch(this.family.localGet()).subscribe((position) => {
       this.positionsList = position
-
       this.positionsList.sort((a,b) => {
         return a.order - b.order;
       })

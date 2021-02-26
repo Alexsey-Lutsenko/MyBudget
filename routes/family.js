@@ -9,5 +9,6 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), controller
 router.patch('/del/:id', passport.authenticate('jwt', {session: false}), controller.deleteUser)
 router.patch('/add/:id', passport.authenticate('jwt', {session: false}), controller.addUser)
 router.patch('/rename/:id', passport.authenticate('jwt', {session: false}), controller.reName)
+router.patch('/def/:id', passport.authenticate('jwt', {session: false}), controller.def)
 
 module.exports = router

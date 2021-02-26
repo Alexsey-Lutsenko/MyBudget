@@ -10,8 +10,8 @@ export class FamilyService {
   constructor(private http: HttpClient) {
   }
 
-  create(family: string): Observable<Family> {
-    return this.http.post<Family>('/api/family', {name: family})
+  create(family: string, def: number): Observable<Family> {
+    return this.http.post<Family>('/api/family', {name: family, def})
   }
 
   fetch(): Observable<Family[]> {
@@ -34,6 +34,10 @@ export class FamilyService {
     return this.http.patch<Family>(`/api/family/rename/${id}`, {id, name})
   }
 
+  def(id: string, def: number): Observable<Family> {
+    return this.http.patch<Family>(`/api/family/def/${id}`, {id, def})
+  }
+
   activeIn(family: string) {
     localStorage.setItem('family', family)
   }
@@ -51,6 +55,6 @@ export class FamilyService {
   }
 
   activeOut() {
-    this.activeIn(JSON.stringify({name: 'без списка', id: 	'000000000000000000000000'}))
+    this.activeIn(JSON.stringify({name: 'все списки', id: 	'000000000000000000000000'}))
   }
 }

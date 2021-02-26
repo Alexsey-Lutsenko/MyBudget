@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PositionService} from "../shared/services/position.service";
-import {Outlay, Position} from "../shared/interfaces";
+import {Family, Outlay, Position} from "../shared/interfaces";
 import {BootstrapService} from "../shared/services/bootstrap.service";
 import {OutlayService} from "../shared/services/outlay.service";
+import {FamilyService} from "../shared/services/family.service";
 
 @Component({
   selector: 'app-outlay-page',
@@ -15,24 +16,31 @@ export class OutlayPageComponent implements OnInit {
   message: string
   positionList: Position[]
   outlayList: Outlay[]
+  families: Family[]
+  activeFamily: string
+  positionQty: number
 
   constructor(private position: PositionService,
+              private family: FamilyService,
               private bootstrap: BootstrapService,
               private outlay: OutlayService) { }
 
   ngOnInit(): void {
-    this.getAllPosition()
-    this.getAllOutlay()
+    this.family.fetch().subscribe((families) => {
+      this.getAllPosition()
+      this.getAllOutlay()
+      this.activeFamily = this.family.localGet()
+    })
   }
 
   getAllPosition() {
-    this.position.fetch().subscribe(
+    this.position.fetch(this.family.localGet()).subscribe(
       (position) => {
         this.positionList = position
-
         this.positionList.sort((a,b) => {
           return a.order - b.order;
         })
+        this.positionQty = this.positionList.length
       }, error => {
         this.message = error.error.message
         this.bootstrap.toast()
@@ -41,14 +49,16 @@ export class OutlayPageComponent implements OnInit {
   }
 
   getAllOutlay() {
-    this.outlay.fetch().subscribe(
+    this.outlay.fetch(this.family.localGet()).subscribe(
       (outlay) => {
         this.outlayList = outlay
       }, error => {
         this.message = error.error.message
+        this.bootstrap.toast()
       }
     )
   }
+
 
   createOutlay(name: string) {
     if (this.sum) {
