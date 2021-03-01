@@ -13,9 +13,12 @@ import {DOCUMENT} from "@angular/common";
 })
 export class SiteLayoutComponent implements OnInit{
 
-  links = [
+  linksMenu = [
     {url: '/outlay', name: 'Расходы'},
     {url: '/income', name: 'Доходы'},
+  ]
+
+  linksProfile = [
     {url: '/analytical', name: 'Аналитика'},
     {url: '/setting', name: 'Настройки'}
   ]

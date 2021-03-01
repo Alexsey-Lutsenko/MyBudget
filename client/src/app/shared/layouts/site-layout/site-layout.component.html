@@ -1,42 +1,74 @@
-<div class="container">
-  <div class="container-fluid">
-    <router-outlet></router-outlet>
-  </div>
-</div>
-
-<div class="fixed-bottom">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/outlay">MyBudget</a>
-      <div class="dropup">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                (click)="getAllFamily()"
-        >
-          {{activeFamilyName? activeFamilyName : 'без списка'}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div *ngIf="families; else loader">
-            <div *ngFor="let f of families">
-              <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
+<div class="container px-0">
+  <div class="layout-site">
+    <div class="layout-site__row">
+      <div class="site-layout__block_brand">
+        <div class="site-layout__content_brand row pt-2 mx-1">
+          <a class="brand pl-3" routerLink="/outlay" [textContent]="'My Budget' | uppercase"></a>
+          <div class="pr-3">
+            <div
+              class=""
+              type="button"
+              id="dropdownMenu"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Профиль
+            </div>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+              <div *ngFor="let p of linksProfile">
+                <a class="dropdown-item" [routerLink]="p.url">{{p.name}}</a>
+              </div>
+              <hr class="my-0">
+              <a class="dropdown-item" (click)="logout($event)">Выход</a>
             </div>
           </div>
         </div>
-
-        <ng-template #loader>
-          <app-loader></app-loader>
-        </ng-template>
-
       </div>
-      <button class="btn btn-danger" (click)="removeActiveFamily()">x</button>
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item"  routerLinkActive="active" *ngFor="let link of links">
-          <a class="nav-item nav-link"  [routerLink]="link.url">{{link.name}}</a>
-        </li>
-      </ul>
-      <a href="#" class="nav-item nav-link" (click)="logout($event)">Выход</a>
+<!--      <div class="site-layout__block_content">-->
+<!--        <div class="site-layout__content mx-2">-->
+<!--          <router-outlet></router-outlet>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="site-layout__block_menu">
+        <div class="row mx-1">
+          <div class="dropup">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              (click)="getAllFamily()"
+            >
+              {{activeFamilyName? activeFamilyName : 'без списка'}}
+            </button>
+            <button class="btn btn-danger" (click)="removeActiveFamily()">x</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div *ngIf="families; else loader">
+                <div *ngFor="let f of families">
+                  <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #loader>
+              <app-loader></app-loader>
+            </ng-template>
+          </div>
+          <nav class="row">
+            <div class="nav-item"  routerLinkActive="active" *ngFor="let link of linksMenu">
+              <a class="nav-item nav-link"  [routerLink]="link.url">{{link.name}}</a>
+            </div>
+          </nav>
+        </div>
+      </div>
     </div>
-  </nav>
+  </div>
 </div>
+
+
 
 
 

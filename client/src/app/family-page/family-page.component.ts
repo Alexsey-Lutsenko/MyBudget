@@ -1,7 +1,9 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit} from '@angular/core';
 import {FamilyService} from "../shared/services/family.service";
 import {Family} from "../shared/interfaces";
 import {BootstrapService} from "../shared/services/bootstrap.service";
+import {PositionService} from "../shared/services/position.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-family-page',
@@ -20,7 +22,8 @@ export class FamilyPageComponent implements OnInit {
   maxDefFamily: number
 
   constructor(private family: FamilyService,
-              private bootstrap: BootstrapService) {}
+              private bootstrap: BootstrapService,
+              @Inject(DOCUMENT) private _document: Document) {}
 
   ngOnInit(): void {
     this.getAllFamily()
@@ -138,7 +141,10 @@ export class FamilyPageComponent implements OnInit {
     }
   }
 
-  defaultFamily(id: string) {
+  defaultFamily(id: string, name: string) {
+    const family = JSON.stringify({name: name, id: id})
+    this.family.activeIn(family)
+
     const defNumber = this.maxDefFamily + 0.05
 
     this.maxDefFamily = null
@@ -152,6 +158,11 @@ export class FamilyPageComponent implements OnInit {
         this.bootstrap.toast()
       }
     )
+    this.pageReload()
+  }
+
+  pageReload() {
+    this._document.defaultView.location.reload();
   }
 
 }
