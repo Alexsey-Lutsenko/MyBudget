@@ -2,39 +2,11 @@
   <div class="layout-site">
     <div class="layout-site__row">
       <div class="site-layout__block_brand">
-        <div class="site-layout__content_brand row pt-2 mx-1">
+        <div class="site-layout__content_brand row pt-3 mx-1">
           <a class="brand pl-3" routerLink="/outlay" [textContent]="'My Budget' | uppercase"></a>
-          <div class="pr-3">
-            <div
-              class=""
-              type="button"
-              id="dropdownMenu"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Профиль
-            </div>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-              <div *ngFor="let p of linksProfile">
-                <a class="dropdown-item" [routerLink]="p.url">{{p.name}}</a>
-              </div>
-              <hr class="my-0">
-              <a class="dropdown-item" (click)="logout($event)">Выход</a>
-            </div>
-          </div>
-        </div>
-      </div>
-<!--      <div class="site-layout__block_content">-->
-<!--        <div class="site-layout__content mx-2">-->
-<!--          <router-outlet></router-outlet>-->
-<!--        </div>-->
-<!--      </div>-->
-      <div class="site-layout__block_menu">
-        <div class="row mx-1">
-          <div class="dropup">
+          <div class="button_position">
             <button
-              class="btn btn-secondary dropdown-toggle"
+              class="btn layout-site_button"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
@@ -44,24 +16,53 @@
             >
               {{activeFamilyName? activeFamilyName : 'без списка'}}
             </button>
-            <button class="btn btn-danger" (click)="removeActiveFamily()">x</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-menu dropdown_position" aria-labelledby="dropdownMenuButton">
               <div *ngIf="families; else loader">
                 <div *ngFor="let f of families">
                   <a class="dropdown-item" (click)="saveFamily(f._id, f.name)">{{f.name}}</a>
                 </div>
+                <div>
+                  <a class="dropdown-item text" (click)="removeActiveFamily()">все списки</a>
+                </div>
+              </div>
+              <ng-template #loader>
+                <app-loader></app-loader>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-layout__block_content">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="site-layout_container">
+        <div class="site-layout__block_menu">
+          <div class="site-layout__link">
+            <div class="nav-item"  routerLinkActive="active" *ngFor="let link of linksMenu">
+              <a class="nav-item nav-link brand text"  [routerLink]="link.url">{{link.name}}</a>
+            </div>
+          </div>
+          <div class="site-layout__button">
+            <div class="pb-2">
+              <div
+                class="btn layout-site_button"
+                type="button"
+                id="dropdownMenu"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Профиль
+              </div>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <div *ngFor="let p of linksProfile">
+                  <a class="dropdown-item" [routerLink]="p.url">{{p.name}}</a>
+                </div>
+                <hr class="my-0">
+                <a class="dropdown-item" (click)="logout($event)">Выход</a>
               </div>
             </div>
-
-            <ng-template #loader>
-              <app-loader></app-loader>
-            </ng-template>
           </div>
-          <nav class="row">
-            <div class="nav-item"  routerLinkActive="active" *ngFor="let link of linksMenu">
-              <a class="nav-item nav-link"  [routerLink]="link.url">{{link.name}}</a>
-            </div>
-          </nav>
         </div>
       </div>
     </div>

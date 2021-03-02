@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
 
 .layout-site {
   display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px !important;
 }
 
 .layout-site__row {
@@ -9,6 +12,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  overflow: hidden;
 }
 
 .site-layout__block_brand {
@@ -29,15 +33,64 @@
   text-shadow: 1px 1px 2px black, 0 0 1em #6BA7FB;
 }
 
+.button_position {
+  margin-right: 10px;
+}
+
+.site-layout__block_brand .dropdown-menu {
+  font-size: 14px;
+  top: 0.5rem !important;
+  left: -1rem !important;
+}
+
+.layout-site_button {
+  background: #6BA7FB;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 2px 2px #000
+}
+  .layout-site_button:hover {
+  }
+
+.text {
+  font-weight: bold;
+}
+
 .site-layout__block_content {
+  display: flex;
+  justify-content: center;
   flex: 1 1 auto;
 }
 
-.site-layout__content {
+.site-layout_container {
+}
+
+.site-layout__block_menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.brand.text {
+  font-size: 18px;
+}
+
+.site-layout__button {
   display: flex;
   justify-content: center;
 }
 
-.site-layout__block_menu {
-  text-align: center;
+.site-layout__link {
+  display: flex;
+  flex: 0 0 60%;
 }
+.site-layout__button .dropdown-menu {
+  font-size: 14px;
+  top: -0.5rem !important;
+  left: -1rem !important;
+}
+
+
+
+

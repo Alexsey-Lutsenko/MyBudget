@@ -1,0 +1,75 @@
+
+.outlay__row {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100% !important;
+  padding: 0 20px 20px 20px;
+
+}
+
+.outlay__card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 20px;
+  margin-bottom: 8px;
+}
+
+.text-item {
+
+}
+
+.btn-item {
+
+}
+
+.button-item {
+  box-shadow: 0 0 5px red;
+  padding: 0 8px;
+  border-radius: 50px;
+}
+
+.outlay__input {
+  min-width: 365px;
+  text-align: center;
+}
+
+.text {
+  background: #6BA7FB;
+  border-radius: 30px;
+  color: white;
+}
+
+.outlay__position {
+  display: flex;
+  justify-content: center;
+}
+
+.outlay__item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.item {
+  padding: 5px;
+}
+
+.position-btn {
+  border-radius: 20px;
+  background: darkcyan;
+  color: white;
+  text-shadow: 0px 0px 10px black;
+}
+
+.outlay__list {
+  justify-content: center;
+  flex-basis: 150px;
+  overflow: scroll;
+}
+
+.list-group {
+  margin: 5px 0;
+}

@@ -52,6 +52,18 @@ export class OutlayPageComponent implements OnInit {
     this.outlay.fetch(this.family.localGet()).subscribe(
       (outlay) => {
         this.outlayList = outlay
+        this.outlayList.sort((a,b) => {
+          let dateA = a.date
+          let dateB = b.date
+
+          if (dateA > dateB) {
+            return -1
+          }
+          if (dateA < dateB) {
+            return 1
+          }
+          return 0
+        })
       }, error => {
         this.message = error.error.message
         this.bootstrap.toast()

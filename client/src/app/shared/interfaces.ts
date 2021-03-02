@@ -52,5 +52,7 @@ export interface Outlay {
   position: string
   sum: number
   user: string
+  userName: string
   family: string
+  familyName: string
 }
